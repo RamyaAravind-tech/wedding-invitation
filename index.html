@@ -26,7 +26,7 @@
   - Digital Guestbook & Wishes Wall (வாழ்த்து மடல்)
   - Save Contact (.vcf) & Scan-to-Navigate QR Code
   - Evening Candlelight Mode (மாலை தீப தரிசனம்)
-  - Stealth Host PIN Access (1234) & Personalized Guest Links (?guest=Name)
+  - Host Password Access & Personalized Guest Links (?guest=Name)
   ==========================================================================
   -->
 
@@ -973,7 +973,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0.42; /* Luminous romantic watermark portrait */
+      opacity: var(--couple-backdrop-opacity, 0.45); /* Luminous romantic watermark portrait */
       filter: drop-shadow(0 0 22px rgba(212, 175, 55, 0.4));
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
@@ -2132,7 +2132,7 @@
       .hero-names-bg-portrait-wrap {
         width: min(80vw, 290px);
         height: clamp(140px, 44vw, 190px);
-        opacity: 0.36;
+        opacity: var(--couple-backdrop-opacity, 0.45);
       }
       .hero-names-wrap {
         position: relative;
@@ -2401,6 +2401,94 @@
       .fade-up { opacity: 1 !important; transform: none !important; }
       #reveal-overlay { display: none !important; }
     }
+  
+    /* Sacred Murugar Vel (முருகர் வேல்) */
+    .sacred-murugar-vel {
+      width: 28px;
+      height: 76px;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.45));
+      transition: transform 0.3s ease;
+    }
+    .sacred-murugar-vel:hover {
+      transform: scale(1.08);
+    }
+    @media (max-width: 680px) {
+      .sacred-murugar-vel {
+        width: 20px;
+        height: 54px;
+      }
+    }
+
+    /* Couple Standing Full-Length Portrait Cutout (.png) with Golden Halo */
+    .hero-couple-standing-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 18px auto 20px auto;
+      max-width: 320px;
+    }
+    .standing-halo-glow {
+      position: absolute;
+      width: 82%;
+      height: 82%;
+      top: 9%;
+      left: 9%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(249, 178, 51, 0.16) 48%, transparent 72%);
+      filter: blur(14px);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-couple-standing-img {
+      position: relative;
+      z-index: 2;
+      width: clamp(190px, 46vw, 270px);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 26px rgba(92, 14, 23, 0.28));
+      transition: transform 0.4s ease;
+    }
+    .hero-couple-standing-img:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Arched Framed Photos above Biographies in #couple-sec */
+    .couple-bio-photo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .couple-bio-photo-arch {
+      width: 140px;
+      height: 180px;
+      border-radius: 70px 70px 14px 14px;
+      overflow: hidden;
+      position: relative;
+      border: 3px solid var(--accent-gold);
+      box-shadow: 0 10px 24px rgba(92, 14, 23, 0.18), inset 0 0 0 2px rgba(255, 240, 210, 0.4);
+      background: #FFFDF9;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .couple-bio-photo-arch:hover {
+      transform: translateY(-3px) scale(1.03);
+      border-color: var(--accent-gold-dark);
+    }
+    .couple-bio-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+    }
+
+    /* Audio Mute Button in Top Action Bar */
+    .top-action-pill.muted {
+      background: #8C1924;
+      color: #FFFDF9;
+      border-color: var(--accent-gold);
+    }
+
   </style>
 </head>
 <body class="scroll-locked">
@@ -2439,7 +2527,7 @@
 
   <!-- Floating Top Action Bar: Melam Music Player & Candlelight Mode -->
   <div class="top-action-bar">
-    <button class="melam-music-pill" id="melam-pill-btn" onclick="openMelamModal()" title="பாரம்பரிய மங்கள இசை (Traditional Melam Music)">
+    <button class="melam-music-pill" onclick="openMelamModal()" id="melam-pill-btn" title="இசைப் பட்டியல் &bull; Music Console">
       <span class="eq-wave">
         <span class="bar b1"></span>
         <span class="bar b2"></span>
@@ -2448,9 +2536,10 @@
       </span>
       <span id="melam-pill-label">🎵 இடிச்ச பச்சரிசி</span>
     </button>
-    <button class="top-action-pill" onclick="toggleCandlelightMode()" id="candlelight-btn" title="தீப ஒளி / பகல் பட்டு">
-      <span id="candle-icon">🕯️</span>
-      <span id="candle-label">மாலை தீபம்</span>
+    <!-- Public Direct Mute / Unmute Toggle Button -->
+    <button class="top-action-pill" id="audio-mute-btn" onclick="toggleMuteAudio()" title="Mute / Unmute Audio" aria-label="Mute or Unmute Music">
+      <span id="mute-icon">🔊</span>
+      <span id="mute-label">Mute</span>
     </button>
   </div>
 
@@ -2526,6 +2615,49 @@
     </symbol>
 
     <!-- Traditional Brass Kuthuvilakku (மங்கள குத்துவிளக்கு) -->
+        <!-- Sacred Golden Murugar Vel (முருகர் வேல்) -->
+    <symbol id="icon-murugar-vel" viewBox="0 0 80 240">
+      <defs>
+        <linearGradient id="velLeft" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FFEAA7" />
+          <stop offset="60%" stop-color="#F9B233" />
+          <stop offset="100%" stop-color="#D4AF37" />
+        </linearGradient>
+        <linearGradient id="velRight" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#D4AF37" />
+          <stop offset="50%" stop-color="#C59A27" />
+          <stop offset="100%" stop-color="#8C6B17" />
+        </linearGradient>
+        <linearGradient id="velShaft" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#FFEAA7" />
+          <stop offset="40%" stop-color="#D4AF37" />
+          <stop offset="100%" stop-color="#8C6B17" />
+        </linearGradient>
+      </defs>
+      <!-- Left Blade Half -->
+      <path d="M 40 6 C 35 20, 24 38, 16 54 C 13 65, 13 76, 16 86 C 20 96, 28 106, 36 114 L 40 114 Z" fill="url(#velLeft)" stroke="#9E741E" stroke-width="1" />
+      <!-- Right Blade Half -->
+      <path d="M 40 6 C 45 20, 56 38, 64 54 C 67 65, 67 76, 64 86 C 60 96, 52 106, 44 114 L 40 114 Z" fill="url(#velRight)" stroke="#9E741E" stroke-width="1" />
+      <!-- Center Golden Spine / Ridge -->
+      <line x1="40" y1="6" x2="40" y2="114" stroke="#FFF8EA" stroke-width="1.8" stroke-linecap="round" opacity="0.9" />
+      <!-- Sacred Saivite Vibhuti Stripes (திருநீற்றுப் பட்டைகள்) -->
+      <line x1="26" y1="58" x2="54" y2="58" stroke="#FFFDF9" stroke-width="2.6" stroke-linecap="round" />
+      <line x1="22" y1="65" x2="58" y2="65" stroke="#FFFDF9" stroke-width="2.6" stroke-linecap="round" />
+      <line x1="26" y1="72" x2="54" y2="72" stroke="#FFFDF9" stroke-width="2.6" stroke-linecap="round" />
+      <!-- Sacred Red Kumkumam Dot (குங்குமப் பொட்டு) -->
+      <circle cx="40" cy="65" r="3.4" fill="#B52B35" stroke="#FFEAA7" stroke-width="0.8" />
+      <!-- Ornamental Collar & Lotus Ferrule -->
+      <ellipse cx="40" cy="116" rx="9" ry="3.5" fill="#E5C158" stroke="#9E741E" stroke-width="1" />
+      <circle cx="40" cy="122" r="5" fill="#D4AF37" stroke="#9E741E" stroke-width="1" />
+      <ellipse cx="40" cy="127" rx="8" ry="3" fill="#C59A27" />
+      <!-- Golden Shaft (வேல் தண்டு) -->
+      <rect x="37.5" y="128" width="5" height="96" rx="2" fill="url(#velShaft)" stroke="#8C6B17" stroke-width="0.8" />
+      <!-- Pedestal Base (வேல் பீடம்) -->
+      <ellipse cx="40" cy="224" rx="14" ry="4" fill="#D4AF37" />
+      <path d="M 24 236 L 27 226 L 53 226 L 56 236 Z" fill="#C59A27" stroke="#9E741E" stroke-width="1" />
+      <ellipse cx="40" cy="236" rx="20" ry="4.5" fill="#8C6B17" />
+    </symbol>
+
     <symbol id="icon-kuthuvilakku" viewBox="0 0 80 240">
       <!-- Circular Pedestal Base -->
       <ellipse cx="40" cy="232" rx="34" ry="7" fill="#C59A27" />
@@ -2664,7 +2796,7 @@
             நல்வரவு &bull; <span id="overlay-guest-name">அன்பு விருந்தினர்</span>
           </div>
           
-          <div style="font-family: var(--font-tamil); font-size: 15px; font-weight: 700; color: #8C1924; margin-bottom: 6px;">மேல்மலையனூர் ஸ்ரீ அங்காள பரமேஸ்வரி துணை</div>
+          <div style="font-family: var(--font-tamil); font-size: 15px; font-weight: 700; color: #8C1924; margin-bottom: 6px;" id="overlay-tamil-blessing">மேல்மலையனூர் ஸ்ரீ அங்காள பரமேஸ்வரி துணை</div>
 
           <div style="font-family: var(--font-heading); font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #9E741E; margin-bottom: 4px;">
             திருமண அழைப்பிதழ்
@@ -2722,9 +2854,9 @@
       <!-- Sacred Tamil Invocation Banner with Twin Kuthuvilakku Lamps -->
       <div class="tamil-invocation-box">
         <div class="tamil-vinayagar-header-row">
-          <svg class="vinayagar-lamp" viewBox="0 0 80 240"><use href="#icon-kuthuvilakku"></use></svg>
+          <svg class="sacred-murugar-vel" viewBox="0 0 80 240" aria-label="Murugar Vel"><use href="#icon-murugar-vel"></use></svg>
           <div class="tamil-vinayagar-line" id="hero-tamil-vinayagar">மேல்மலையனூர் ஸ்ரீ அங்காள பரமேஸ்வரி துணை</div>
-          <svg class="vinayagar-lamp" viewBox="0 0 80 240"><use href="#icon-kuthuvilakku"></use></svg>
+          <svg class="sacred-murugar-vel" viewBox="0 0 80 240" aria-label="Murugar Vel"><use href="#icon-murugar-vel"></use></svg>
         </div>
         <div class="thirukkural-quote-cartouche">
           <div class="thirukkural-quote" id="hero-thirukkural">
@@ -2743,23 +2875,8 @@
         <span class="personalized-guest-pill">அன்புடன் அழைப்பது: <span id="hero-guest-name"></span></span>
       </div>
 
-      <!-- Couple Names Flanked by Gradient-Style Groom & Bride Photos -->
-      <div class="hero-names-photos-row">
-        <!-- Bride Side Gradient Photo Frame (Left) -->
-        <div class="hero-photo-flank-col">
-          <div class="hero-gradient-photo-frame" id="hero-bride-frame">
-            <div class="photo-arch-inner">
-              <img src="photo2.jpg" alt="மணமகள் • Bride" id="hero-bride-img" class="flank-photo-img" onerror="this.onerror=null; this.src='photo2.jpg';">
-              <div class="photo-vignette-overlay"></div>
-            </div>
-          </div>
-          <div class="photo-frame-caption">
-            <span class="caption-tamil" id="hero-flank-left-title">மணமகள்</span>
-            <span class="caption-en" id="hero-bride-name-sub">Ramya</span>
-          </div>
-        </div>
-
-        <!-- Center Couple Names in Majestic Script with Luminous Photo Backdrop & Centered Ampersand -->
+      <!-- Couple Names with Luminous Photo Backdrop & Centered Ampersand -->
+      <div class="hero-names-photos-row hero-names-single-center">
         <div class="hero-names-center-col">
           <!-- Luminous Romantic Backdrop Portrait of Couple -->
           <div class="hero-names-bg-portrait-wrap">
@@ -2778,21 +2895,14 @@
             <span style="opacity: 0.6;">☙</span>
           </div>
         </div>
-
-        <!-- Groom Side Gradient Photo Frame (Right) -->
-        <div class="hero-photo-flank-col">
-          <div class="hero-gradient-photo-frame" id="hero-groom-frame">
-            <div class="photo-arch-inner">
-              <img src="photo1.jpg" alt="மணமகன் • Groom" id="hero-groom-img" class="flank-photo-img" onerror="this.onerror=null; this.src='photo1.jpg';">
-              <div class="photo-vignette-overlay"></div>
-            </div>
-          </div>
-          <div class="photo-frame-caption">
-            <span class="caption-tamil" id="hero-flank-right-title">மணமகன்</span>
-            <span class="caption-en" id="hero-groom-name-sub">Aravindh</span>
-          </div>
-        </div>
       </div>
+
+      <!-- Standing Couple Portrait Cutout (.png) inserted below Couple Backdrop Photo -->
+      <div class="hero-couple-standing-wrap" id="hero-standing-wrap">
+        <div class="standing-halo-glow"></div>
+        <img src="couple-standing.png" alt="Aravindh &amp; Ramya" id="hero-couple-standing-img" class="hero-couple-standing-img" onerror="this.style.display='none';">
+      </div>
+
 
       <div class="hero-tamil-announcement" id="hero-tamil-invite-line">
         தங்கள் நல்வரவை நாடும் இல்ல திருமண நல்விழா
@@ -2887,8 +2997,11 @@
         <div class="couple-card fade-up">
           <svg class="corner-ornament corner-tl"><use href="#icon-corner-filigree"></use></svg>
           <svg class="corner-ornament corner-tr"><use href="#icon-corner-filigree"></use></svg>
-          <div class="caricature-badge">
-            <svg class="caricature-svg"><use href="#icon-bride-caricature"></use></svg>
+          <div class="couple-bio-photo-wrap">
+            <div class="couple-bio-photo-arch">
+              <img src="photo2.jpg" alt="Ramya - The Bride" id="bio-bride-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo2.jpg';">
+              <div class="photo-vignette-overlay"></div>
+            </div>
           </div>
           <div class="couple-role-tag">மணமகள் &bull; The Bride</div>
           <h3 class="couple-person-name" id="display-bride-name">Ramya</h3>
@@ -2901,8 +3014,11 @@
         <div class="couple-card fade-up">
           <svg class="corner-ornament corner-tl"><use href="#icon-corner-filigree"></use></svg>
           <svg class="corner-ornament corner-tr"><use href="#icon-corner-filigree"></use></svg>
-          <div class="caricature-badge">
-            <svg class="caricature-svg"><use href="#icon-groom-caricature"></use></svg>
+          <div class="couple-bio-photo-wrap">
+            <div class="couple-bio-photo-arch">
+              <img src="photo1.jpg" alt="Aravindh - The Groom" id="bio-groom-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo1.jpg';">
+              <div class="photo-vignette-overlay"></div>
+            </div>
           </div>
           <div class="couple-role-tag">மணமகன் &bull; The Groom</div>
           <h3 class="couple-person-name" id="display-groom-name">Aravindh</h3>
@@ -3189,7 +3305,7 @@
         <span style="font-size: 20px;">⚙️</span>
         <div>
           <h3 style="font-family: var(--font-heading); font-size: 15px; color: var(--text-primary); font-weight: 700;">Host Customizer</h3>
-          <div style="font-size: 11px; color: var(--text-muted);">PIN: 1234 &bull; All Fields Editable</div>
+          <div style="font-size: 11px; color: var(--text-muted);">Host Control Panel &bull; All Fields Editable</div>
         </div>
       </div>
       <button onclick="toggleHostDrawer(false)" style="font-size: 24px; color: var(--text-primary); cursor: pointer;">&times;</button>
@@ -3229,6 +3345,14 @@
         <div class="host-group">
           <label>Couple Backdrop Photo (பெயரின் பின்னால் தோன்றும் தம்பதியர் படம்)</label>
           <input type="text" id="inp-couple-backdrop" placeholder="couple-hero-bg.png">
+        </div>
+        <div class="host-group">
+          <label>Couple Backdrop Photo Opacity: <span id="val-backdrop-opacity">45%</span></label>
+          <input type="range" id="inp-backdrop-opacity" min="0" max="100" value="45" oninput="updateBackdropOpacity(this.value)">
+        </div>
+        <div class="host-group">
+          <label>Couple Standing Photo (.png Cutout below Backdrop)</label>
+          <input type="text" id="inp-couple-standing" placeholder="couple-standing.png">
         </div>
         <div class="host-group">
           <label>Name Order on Website</label>
@@ -3432,7 +3556,7 @@
   </div>
 
   <!-- Floating Host Settings Access Gear -->
-  <button class="host-floating-btn" onclick="promptHostAccess()" title="Host Settings (PIN: 1234)">
+  <button class="host-floating-btn" onclick="promptHostAccess()" title="Host Settings">
     ⚙️
   </button>
   <!-- =============================================================
@@ -3471,6 +3595,8 @@
       groomPhoto: "photo1.jpg",
       bridePhoto: "photo2.jpg",
       coupleBackdropPhoto: "couple-hero-bg.png",
+      coupleBackdropOpacity: 45,
+      coupleStandingPhoto: "couple-standing.png",
       rangoliOpacity: 60,
       nameOrder: "Bride & Groom",
       monogram: "A&R",
@@ -4040,6 +4166,50 @@
     /* -------------------------------------------------------------
        5.1 OPENING REVEAL ANIMATION
        ------------------------------------------------------------- */
+    
+    // Live Opacity update helper
+    function updateBackdropOpacity(val) {
+      document.getElementById('val-backdrop-opacity').innerText = val + '%';
+      document.documentElement.style.setProperty('--couple-backdrop-opacity', val / 100);
+      if (hostConfig) hostConfig.coupleBackdropOpacity = parseInt(val, 10);
+    }
+
+    // Public Direct Mute / Unmute Toggle
+    let isMuted = false;
+    let preMuteVolume = 0.8;
+
+    function toggleMuteAudio() {
+      const btn = document.getElementById('audio-mute-btn');
+      const icon = document.getElementById('mute-icon');
+      const label = document.getElementById('mute-label');
+
+      if (!isMuted) {
+        // Mute audio
+        isMuted = true;
+        preMuteVolume = melamVolume;
+        if (htmlAudio) htmlAudio.muted = true;
+        if (masterGain && audioCtx) {
+          masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+        }
+        if (icon) icon.innerText = '🔇';
+        if (label) label.innerText = 'Unmute';
+        if (btn) btn.classList.add('muted');
+      } else {
+        // Unmute audio
+        isMuted = false;
+        if (htmlAudio) htmlAudio.muted = false;
+        if (masterGain && audioCtx) {
+          masterGain.gain.setValueAtTime((preMuteVolume || 0.8) * 0.18, audioCtx.currentTime);
+        }
+        if (!isPlayingAudio) {
+          startMelamAudio();
+        }
+        if (icon) icon.innerText = '🔊';
+        if (label) label.innerText = 'Mute';
+        if (btn) btn.classList.remove('muted');
+      }
+    }
+
     function openInvitation() {
       const overlay = document.getElementById('reveal-overlay');
       const box = document.getElementById('envelope-box');
@@ -4154,6 +4324,27 @@
 
       const elTamilVinayagar = document.getElementById('hero-tamil-vinayagar');
       if (elTamilVinayagar) elTamilVinayagar.innerText = hostConfig.tamilBlessing;
+
+      const elOverlayBlessing = document.getElementById('overlay-tamil-blessing');
+      if (elOverlayBlessing) elOverlayBlessing.innerText = hostConfig.tamilBlessing;
+
+      // Apply Backdrop Opacity
+      const backdropOpacity = hostConfig.coupleBackdropOpacity !== undefined ? hostConfig.coupleBackdropOpacity : 45;
+      document.documentElement.style.setProperty('--couple-backdrop-opacity', backdropOpacity / 100);
+      const valDisp = document.getElementById('val-backdrop-opacity');
+      if (valDisp) valDisp.innerText = backdropOpacity + '%';
+      const inpRange = document.getElementById('inp-backdrop-opacity');
+      if (inpRange) inpRange.value = backdropOpacity;
+
+      // Apply Standing Couple Photo
+      const elStandingImg = document.getElementById('hero-couple-standing-img');
+      if (elStandingImg) elStandingImg.src = hostConfig.coupleStandingPhoto || 'couple-standing.png';
+
+      // Apply Bio Photos
+      const elBioGroom = document.getElementById('bio-groom-photo');
+      if (elBioGroom) elBioGroom.src = hostConfig.groomPhoto || 'photo1.jpg';
+      const elBioBride = document.getElementById('bio-bride-photo');
+      if (elBioBride) elBioBride.src = hostConfig.bridePhoto || 'photo2.jpg';
 
       const elThirukkural = document.getElementById('hero-thirukkural');
       if (elThirukkural) elThirukkural.innerText = hostConfig.thirukkural;
@@ -5121,7 +5312,12 @@
        COMPREHENSIVE HOST CUSTOMIZER JS LOGIC
        ------------------------------------------------------------- */
     function promptHostAccess() {
-      toggleHostDrawer(true);
+      const entered = prompt('Enter Host Access Password:');
+      if (entered === '0011') {
+        toggleHostDrawer(true);
+      } else if (entered !== null) {
+        alert('Incorrect password. Access denied.');
+      }
     }
 
     function toggleHostDrawer(open) {
