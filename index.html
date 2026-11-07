@@ -2581,6 +2581,425 @@
       border-color: var(--accent-gold);
     }
 
+
+    /* =============================================================
+       LUXURY CINEMATIC ENHANCEMENTS: 3D ENVELOPE, TEMPLE & CELEBRATION
+       ============================================================= */
+
+    /* 1. Cinematic 3D Envelope & Wax Seal Shatter */
+    .envelope-container {
+      perspective: 1400px;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .envelope-light-rays {
+      position: absolute;
+      width: clamp(340px, 80vw, 650px);
+      height: clamp(340px, 80vw, 650px);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.22) 0%, rgba(247, 168, 40, 0.08) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      animation: rotate-envelope-rays 28s linear infinite;
+      opacity: 0.85;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    @keyframes rotate-envelope-rays {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    .envelope-wrapper.unfolded ~ .envelope-light-rays {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.25) rotate(45deg);
+    }
+
+    .wax-seal-btn.breaking {
+      animation: seal-shatter 0.55s ease-out forwards;
+    }
+    @keyframes seal-shatter {
+      0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+      40% { transform: translateX(-50%) scale(1.22); filter: brightness(1.7) drop-shadow(0 0 25px rgba(255, 215, 0, 1)); }
+      100% { transform: translateX(-50%) scale(1.4); opacity: 0; filter: brightness(2); }
+    }
+
+    /* 2. Living South Indian Temple Environment: Twin Kuthuvilakku Lamps & Toran */
+    .hero-vilakku-flank {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 72px;
+      height: 220px;
+      pointer-events: none;
+      z-index: 4;
+      display: none;
+    }
+    @media (min-width: 992px) {
+      .hero-vilakku-flank { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+      .vilakku-left { left: 28px; }
+      .vilakku-right { right: 28px; }
+    }
+    .vilakku-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.45));
+    }
+    .vilakku-aura {
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 200, 50, 0.45) 0%, rgba(255, 140, 0, 0.15) 50%, transparent 75%);
+      pointer-events: none;
+      animation: aura-pulse 3.8s ease-in-out infinite;
+    }
+    .vilakku-smoke {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), transparent);
+      border-radius: 50%;
+      filter: blur(2px);
+      pointer-events: none;
+      animation: smoke-rise 2.6s linear infinite;
+    }
+
+    .kuthuvilakku-flame {
+      transform-origin: center bottom;
+      animation: flame-flicker 1.8s ease-in-out infinite alternate;
+    }
+    .vilakku-right .kuthuvilakku-flame {
+      animation-delay: 0.45s;
+    }
+
+    @keyframes flame-flicker {
+      0% { transform: scale(1) translateY(0) rotate(-1.5deg); filter: drop-shadow(0 0 6px rgba(255, 190, 0, 0.85)); }
+      35% { transform: scale(1.1, 0.95) translateY(-1px) rotate(1.2deg); filter: drop-shadow(0 0 14px rgba(255, 220, 50, 0.98)); }
+      65% { transform: scale(0.95, 1.05) translateY(0.5px) rotate(-1deg); filter: drop-shadow(0 0 8px rgba(255, 150, 0, 0.8)); }
+      100% { transform: scale(1.05, 0.98) translateY(-0.5px) rotate(1.8deg); filter: drop-shadow(0 0 12px rgba(255, 210, 50, 0.92)); }
+    }
+
+    @keyframes smoke-rise {
+      0% { transform: translate(-50%, 0) scaleX(0.8); opacity: 0; }
+      25% { opacity: 0.45; }
+      60% { transform: translate(-45%, -26px) scaleX(1.5) rotate(5deg); opacity: 0.25; }
+      100% { transform: translate(-55%, -52px) scaleX(2.5) rotate(-8deg); opacity: 0; }
+    }
+
+    @keyframes aura-pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.88; }
+    }
+
+    /* Hanging Mavilai & Marigold Toran */
+    .hero-hanging-toran {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      pointer-events: none;
+      z-index: 5;
+      transform-origin: top center;
+      animation: toran-sway 6.5s ease-in-out infinite;
+    }
+    @keyframes toran-sway {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(0.65deg); }
+    }
+
+    /* 3. Cinematic Couple Framing: Floral Arch & Spotlight Halo */
+    .bio-floral-arch-frame {
+      position: relative;
+      display: inline-block;
+      padding: 6px;
+      border-radius: 130px 130px 16px 16px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5) 0%, rgba(246, 222, 140, 0.2) 50%, rgba(212, 175, 55, 0.45) 100%);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(212, 175, 55, 0.2);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.3, 1), box-shadow 0.4s ease;
+    }
+    .bio-floral-arch-frame:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 0 32px rgba(246, 222, 140, 0.45);
+    }
+    .bio-spotlight-halo {
+      position: absolute;
+      inset: -12px;
+      border-radius: 140px 140px 22px 22px;
+      background: radial-gradient(ellipse at 50% 35%, rgba(255, 215, 0, 0.28) 0%, rgba(247, 168, 40, 0.12) 50%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+      animation: aura-pulse 4.5s infinite ease-in-out;
+    }
+
+    /* Cursive Names Handwriting Shimmer */
+    .hero-name-part {
+      background: linear-gradient(90deg, #5C0E17 0%, #D4AF37 30%, #FFF8E7 50%, #D4AF37 70%, #5C0E17 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine-names 7s linear infinite;
+    }
+    body.candlelight-mode .hero-name-part {
+      background: linear-gradient(90deg, #F6DE8C 0%, #FFD700 30%, #FFFDF9 50%, #FFB703 70%, #F6DE8C 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    @keyframes shine-names {
+      to { background-position: 200% center; }
+    }
+
+    /* 4. Interactive Blessing Ribbon Toast */
+    .blessing-toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      z-index: 10002;
+      background: linear-gradient(135deg, #4A0E15 0%, #2B070C 100%);
+      border: 1.8px solid var(--accent-gold);
+      border-radius: 40px;
+      padding: 12px 24px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(212, 175, 55, 0.45);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #FFFDF9;
+      opacity: 0;
+      visibility: hidden;
+      transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease;
+      max-width: min(92vw, 540px);
+    }
+    .blessing-toast.active {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    .toast-bell-icon {
+      font-size: 24px;
+      animation: bell-ring 1.8s ease-in-out infinite;
+    }
+    @keyframes bell-ring {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(14deg); }
+      40% { transform: rotate(-14deg); }
+      60% { transform: rotate(8deg); }
+      80% { transform: rotate(-8deg); }
+    }
+    .toast-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .toast-tamil-line {
+      font-family: var(--font-tamil);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+    }
+    .toast-sub-line {
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      color: #DFC79B;
+    }
+    .toast-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--accent-gold);
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    /* 5. Volume Popover in Top Action Bar */
+    .top-volume-wrap {
+      position: relative;
+    }
+    .top-vol-popover {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.92);
+      width: 190px;
+      background: linear-gradient(135deg, #4A0E15 0%, #2B070C 100%);
+      border: 1.5px solid var(--accent-gold);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(212, 175, 55, 0.35);
+      z-index: 10005;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .top-vol-popover.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) scale(1);
+    }
+    .vol-pop-header {
+      font-family: var(--font-tamil);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .vol-pop-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      color: #FFFDF9;
+      font-size: 13px;
+    }
+    .top-vol-slider {
+      flex: 1;
+      accent-color: var(--accent-gold);
+      height: 4px;
+      cursor: pointer;
+    }
+    .vol-pop-pct {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    /* 6. Lightbox Zoom, Slideshow & Captions */
+    .lightbox-img-wrapper.zoomed img {
+      transform: scale(1.68);
+      cursor: grab;
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+    .lightbox-caption {
+      margin-top: 10px;
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--accent-gold-light);
+      text-align: center;
+      max-width: 90vw;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+    .lightbox-extra-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid var(--accent-gold);
+      border-radius: 20px;
+      color: #FFFDF9;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .lightbox-extra-btn:hover {
+      background: rgba(212, 175, 55, 0.35);
+      transform: translateY(-2px);
+    }
+    .lightbox-extra-btn.active-mode {
+      background: var(--accent-gold);
+      color: #350B10;
+    }
+
+    /* 7. Grand Celebration Banner & Floating Wish Lanterns */
+    .celebration-banner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.85);
+      z-index: 10003;
+      background: radial-gradient(circle at center, #4A0E15 0%, #2B070C 100%);
+      border: 2.5px solid var(--accent-gold);
+      border-radius: 20px;
+      padding: 32px 38px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 50px rgba(212, 175, 55, 0.55);
+      color: #FFFDF9;
+      max-width: min(92vw, 560px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.45s ease, visibility 0.45s ease;
+    }
+    .celebration-banner.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .banner-flourish {
+      color: var(--accent-gold);
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .banner-title {
+      font-family: var(--font-tamil);
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      color: var(--accent-gold-light);
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      margin-bottom: 6px;
+    }
+    .banner-names {
+      font-family: var(--font-script);
+      font-size: clamp(34px, 5.5vw, 52px);
+      color: #FFFDF9;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .banner-desc {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-style: italic;
+      color: #DFC79B;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+    .wish-lantern {
+      position: fixed;
+      width: 44px;
+      height: 64px;
+      border-radius: 8px 8px 16px 16px;
+      background: radial-gradient(circle at 50% 65%, #FFD700 0%, #FB8500 60%, rgba(140, 25, 36, 0.8) 100%);
+      box-shadow: 0 0 24px rgba(255, 200, 50, 0.85), inset 0 0 10px rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.9;
+      animation: lantern-drift 12s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+    }
+    .wish-lantern::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FFFDF9;
+      box-shadow: 0 0 14px #FFD700, 0 0 24px #FB8500;
+    }
+    @keyframes lantern-drift {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.95; }
+      85% { opacity: 0.85; }
+      100% { transform: translateY(-110vh) scale(0.4) rotate(12deg); opacity: 0; }
+    }
+
   </style>
 </head>
 <body class="scroll-locked">
@@ -2628,6 +3047,23 @@
       </span>
       <span id="melam-pill-label">🎵 இடிச்ச பச்சரிசி</span>
     </button>
+    <!-- Direct Volume Control Popover Trigger -->
+    <div class="top-volume-wrap">
+      <button class="top-action-pill" id="vol-popover-btn" onclick="toggleVolumePopover(event)" title="Volume Slider" aria-label="Adjust Music Volume">
+        <span id="vol-icon">🔊</span>
+        <span id="vol-label">Volume</span>
+      </button>
+      <div class="top-vol-popover" id="top-vol-popover">
+        <div class="vol-pop-header">Volume &bull; ஒலி அளவு</div>
+        <div class="vol-pop-row">
+          <span>🔈</span>
+          <input type="range" min="0" max="100" value="80" class="top-vol-slider" id="top-quick-vol" oninput="handleQuickVolume(this.value)">
+          <span>🔊</span>
+        </div>
+        <div class="vol-pop-pct" id="vol-pct-display">80%</div>
+      </div>
+    </div>
+
     <!-- Public Direct Mute / Unmute Toggle Button -->
     <button class="top-action-pill" id="audio-mute-btn" onclick="toggleMuteAudio()" title="Mute / Unmute Audio" aria-label="Mute or Unmute Music">
       <span id="mute-icon">🔊</span>
@@ -2878,6 +3314,7 @@
        ============================================================= -->
   <div id="reveal-overlay" role="dialog" aria-modal="true" aria-label="Wedding Invitation Envelope">
     <div class="envelope-container">
+      <div class="envelope-light-rays" aria-hidden="true"></div>
       <div class="envelope-wrapper" id="envelope-box">
         <!-- Inside Back Shell -->
         <div class="envelope-back-shell"></div>
@@ -2939,7 +3376,53 @@
   <section class="hero-section" id="hero">
     <!-- Grand Rotating Gold Mandala Watermark (from Modern Luxury Mandala Model) -->
     <svg class="hero-mandala-watermark" viewBox="0 0 100 100"><use href="#icon-grand-mandala"></use></svg>
+
+    <!-- Twin Sacred Standing Kuthuvilakku Lamps with Flickering Flame & Smoke -->
+    <div class="hero-vilakku-flank vilakku-left" aria-hidden="true">
+      <div class="vilakku-aura"></div>
+      <svg class="vilakku-svg" viewBox="0 0 80 240"><use href="#icon-kuthuvilakku"></use></svg>
+      <div class="vilakku-smoke"></div>
+    </div>
+    <div class="hero-vilakku-flank vilakku-right" aria-hidden="true">
+      <div class="vilakku-aura"></div>
+      <svg class="vilakku-svg" viewBox="0 0 80 240"><use href="#icon-kuthuvilakku"></use></svg>
+      <div class="vilakku-smoke"></div>
+    </div>
+
     <div class="hero-card fade-up">
+      <!-- Hanging Mavilai & Golden Marigold Toran Garland -->
+      <div class="hero-hanging-toran" aria-hidden="true">
+        <svg viewBox="0 0 600 48" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+          <path d="M0,0 Q150,32 300,8 Q450,32 600,0" fill="none" stroke="#D4AF37" stroke-width="2.5" />
+          <circle cx="75" cy="18" r="6" fill="#FB8500" />
+          <circle cx="75" cy="18" r="3" fill="#FFB703" />
+          <circle cx="150" cy="22" r="7.5" fill="#FB8500" />
+          <circle cx="150" cy="22" r="4" fill="#FFD700" />
+          <circle cx="225" cy="16" r="6" fill="#FB8500" />
+          <circle cx="225" cy="16" r="3" fill="#FFB703" />
+          <circle cx="300" cy="10" r="7.5" fill="#D4AF37" />
+          <circle cx="375" cy="16" r="6" fill="#FB8500" />
+          <circle cx="375" cy="16" r="3" fill="#FFB703" />
+          <circle cx="450" cy="22" r="7.5" fill="#FB8500" />
+          <circle cx="450" cy="22" r="4" fill="#FFD700" />
+          <circle cx="525" cy="18" r="6" fill="#FB8500" />
+          <circle cx="525" cy="18" r="3" fill="#FFB703" />
+          <g fill="#184432" stroke="#2D7A4D" stroke-width="0.8">
+            <path d="M 60,15 C 56,26 62,38 60,44 C 64,38 68,26 66,15 Z" />
+            <path d="M 90,19 C 86,30 92,42 90,46 C 94,42 98,30 96,19 Z" />
+            <path d="M 135,22 C 131,33 137,45 135,48 C 139,45 143,33 141,22 Z" />
+            <path d="M 165,21 C 161,32 167,44 165,47 C 169,44 173,32 171,21 Z" />
+            <path d="M 210,17 C 206,28 212,40 210,44 C 214,40 218,28 216,17 Z" />
+            <path d="M 285,10 C 281,22 287,34 285,38 C 289,34 293,22 291,10 Z" />
+            <path d="M 315,10 C 311,22 317,34 315,38 C 319,34 323,22 321,10 Z" />
+            <path d="M 360,15 C 356,26 362,38 360,42 C 364,38 368,26 366,15 Z" />
+            <path d="M 435,21 C 431,32 437,44 435,47 C 439,44 443,32 441,21 Z" />
+            <path d="M 465,22 C 461,33 467,45 465,48 C 469,45 473,33 471,22 Z" />
+            <path d="M 510,19 C 506,30 512,42 510,46 C 514,42 518,30 516,19 Z" />
+            <path d="M 540,15 C 536,26 542,38 540,44 C 544,38 548,26 546,15 Z" />
+          </g>
+        </svg>
+      </div>
       <!-- Ornate Corner Filigrees -->
       <svg class="corner-ornament corner-tl"><use href="#icon-corner-filigree"></use></svg>
       <svg class="corner-ornament corner-tr"><use href="#icon-corner-filigree"></use></svg>
@@ -3095,9 +3578,12 @@
           <svg class="corner-ornament corner-tl"><use href="#icon-corner-filigree"></use></svg>
           <svg class="corner-ornament corner-tr"><use href="#icon-corner-filigree"></use></svg>
           <div class="couple-bio-photo-wrap">
-            <div class="couple-bio-photo-arch">
-              <img src="photo2.jpg" alt="Ramya - The Bride" id="bio-bride-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo2.jpg';">
-              <div class="photo-vignette-overlay"></div>
+            <div class="bio-floral-arch-frame">
+              <div class="bio-spotlight-halo"></div>
+              <div class="couple-bio-photo-arch">
+                <img src="photo2.jpg" alt="Ramya - The Bride" id="bio-bride-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo2.jpg';">
+                <div class="photo-vignette-overlay"></div>
+              </div>
             </div>
           </div>
           <div class="couple-role-tag">மணமகள் &bull; The Bride</div>
@@ -3112,9 +3598,12 @@
           <svg class="corner-ornament corner-tl"><use href="#icon-corner-filigree"></use></svg>
           <svg class="corner-ornament corner-tr"><use href="#icon-corner-filigree"></use></svg>
           <div class="couple-bio-photo-wrap">
-            <div class="couple-bio-photo-arch">
-              <img src="photo1.jpg" alt="Aravindh - The Groom" id="bio-groom-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo1.jpg';">
-              <div class="photo-vignette-overlay"></div>
+            <div class="bio-floral-arch-frame">
+              <div class="bio-spotlight-halo"></div>
+              <div class="couple-bio-photo-arch">
+                <img src="photo1.jpg" alt="Aravindh - The Groom" id="bio-groom-photo" class="couple-bio-img" onerror="this.onerror=null; this.src='photo1.jpg';">
+                <div class="photo-vignette-overlay"></div>
+              </div>
             </div>
           </div>
           <div class="couple-role-tag">மணமகன் &bull; The Groom</div>
@@ -3300,9 +3789,12 @@
     <div class="lightbox-img-wrapper">
       <img id="lightbox-img" src="photo1.jpg" alt="Wedding Moment Fullscreen">
     </div>
+    <div class="lightbox-caption" id="lightbox-caption">Ramya &amp; Aravindh &bull; Auspicious Wedding Celebrations</div>
     <div class="lightbox-controls">
       <button class="lightbox-arrow-btn" onclick="prevLightboxPhoto()" aria-label="Previous Photo">&larr; Prev</button>
+      <button class="lightbox-extra-btn" id="lightbox-zoom-btn" onclick="toggleLightboxZoom()" aria-label="Toggle Zoom">🔍 Zoom</button>
       <div class="lightbox-counter" id="lightbox-counter">1 / 5</div>
+      <button class="lightbox-extra-btn" id="lightbox-slideshow-btn" onclick="toggleLightboxSlideshow()" aria-label="Toggle Slideshow">▶ Slideshow</button>
       <button class="lightbox-arrow-btn" onclick="nextLightboxPhoto()" aria-label="Next Photo">Next &rarr;</button>
     </div>
   </div>
@@ -4313,6 +4805,7 @@
     function openInvitation(immediate = false) {
       const overlay = document.getElementById('reveal-overlay');
       const box = document.getElementById('envelope-box');
+      const seal = document.getElementById('wax-seal');
 
       if (!box || !overlay) return;
 
@@ -4326,8 +4819,23 @@
       }
 
       overlay.classList.add('opening');
-      box.classList.add('unfolded');
-      burstGoldenSparks(window.innerWidth / 2, window.innerHeight / 2);
+      if (seal) seal.classList.add('breaking');
+
+      // Calculate seal center for sparks burst
+      let cx = window.innerWidth / 2;
+      let cy = window.innerHeight / 2;
+      if (seal) {
+        const r = seal.getBoundingClientRect();
+        cx = r.left + r.width / 2;
+        cy = r.top + r.height / 2;
+      }
+      for (let i = 0; i < 25; i++) {
+        spawnInteractiveSparkle(cx, cy);
+      }
+
+      setTimeout(() => {
+        box.classList.add('unfolded');
+      }, 150);
 
       // Allow 1.1s for top flap to flip open and card to glide up before fade
       setTimeout(() => {
@@ -4694,8 +5202,33 @@
       } catch (err) {}
     }
 
+    function showBlessingToast() {
+      let toast = document.getElementById('blessing-toast-ribbon');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'blessing-toast-ribbon';
+        toast.className = 'blessing-toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = `
+        <div class="toast-bell-icon">🔔</div>
+        <div class="toast-content">
+          <div class="toast-tamil-line">✦ இல்லற நல்வாழ்வு சிறக்க வாழ்த்துகள்! ✦</div>
+          <div class="toast-sub-line">Heartfelt blessings showered upon Ramya &amp; Aravindh 🌸</div>
+        </div>
+        <button class="toast-close-btn" onclick="this.parentElement.classList.remove('active')" aria-label="Close Blessing Toast">&times;</button>
+      `;
+      toast.offsetHeight;
+      toast.classList.add('active');
+      if (window.blessingToastTimer) clearTimeout(window.blessingToastTimer);
+      window.blessingToastTimer = setTimeout(() => {
+        if (toast) toast.classList.remove('active');
+      }, 4500);
+    }
+
     function showerAkshadhaiBlessings() {
       akshadhaiCanvas = document.getElementById('akshadhai-canvas');
+      showBlessingToast();
       if (!akshadhaiCanvas) return;
       akshadhaiCtx = akshadhaiCanvas.getContext('2d');
 
@@ -5044,6 +5577,17 @@
     let touchStartX = 0;
     let touchStartY = 0;
 
+    let isLightboxZoomed = false;
+    let slideshowTimer = null;
+
+    const photoCaptions = [
+      "Ramya & Aravindh • Auspicious Wedding Celebrations",
+      "Ramya - The Beautiful South Indian Bride",
+      "Aravindh - The Dashing & Loving Groom",
+      "Sacred Traditional Silk Attire & Auspicious Decor",
+      "Joyful Memories & Golden Moments with Family"
+    ];
+
     function openLightbox(idx) {
       currentPhotoIdx = idx;
       updateLightboxView();
@@ -5054,6 +5598,16 @@
     function closeLightbox() {
       const modal = document.getElementById('lightbox-modal');
       if (modal) modal.classList.remove('active');
+      if (slideshowTimer) {
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+        const btn = document.getElementById('lightbox-slideshow-btn');
+        if (btn) {
+          btn.innerHTML = '▶ Slideshow';
+          btn.classList.remove('active-mode');
+        }
+      }
+      if (isLightboxZoomed) toggleLightboxZoom();
     }
 
     function prevLightboxPhoto() {
@@ -5066,9 +5620,37 @@
       updateLightboxView();
     }
 
+    function toggleLightboxZoom() {
+      const wrapper = document.querySelector('.lightbox-img-wrapper');
+      const btn = document.getElementById('lightbox-zoom-btn');
+      isLightboxZoomed = !isLightboxZoomed;
+      if (wrapper) wrapper.classList.toggle('zoomed', isLightboxZoomed);
+      if (btn) btn.innerHTML = isLightboxZoomed ? '🔍 Reset' : '🔍 Zoom';
+    }
+
+    function toggleLightboxSlideshow() {
+      const btn = document.getElementById('lightbox-slideshow-btn');
+      if (slideshowTimer) {
+        clearInterval(slideshowTimer);
+        slideshowTimer = null;
+        if (btn) {
+          btn.innerHTML = '▶ Slideshow';
+          btn.classList.remove('active-mode');
+        }
+      } else {
+        nextLightboxPhoto();
+        slideshowTimer = setInterval(nextLightboxPhoto, 3200);
+        if (btn) {
+          btn.innerHTML = '⏸ Pause';
+          btn.classList.add('active-mode');
+        }
+      }
+    }
+
     function updateLightboxView() {
       const img = document.getElementById('lightbox-img');
       const counter = document.getElementById('lightbox-counter');
+      const caption = document.getElementById('lightbox-caption');
       if (img) {
         img.style.opacity = '0.35';
         img.style.transform = 'scale(0.97)';
@@ -5076,12 +5658,16 @@
           img.src = photoList[currentPhotoIdx];
           img.onload = () => {
             img.style.opacity = '1';
-            img.style.transform = 'scale(1)';
+            img.style.transform = isLightboxZoomed ? 'scale(1.68)' : 'scale(1)';
           };
         }, 120);
       }
       if (counter) counter.innerText = `${currentPhotoIdx + 1} / ${photoList.length}`;
+      if (caption) {
+        caption.innerText = photoCaptions[currentPhotoIdx] || `Ramya & Aravindh • Photo ${currentPhotoIdx + 1}`;
+      }
     }
+
 
     // Keyboard & Gesture support for Lightbox
     window.addEventListener('keydown', (e) => {
@@ -5668,6 +6254,71 @@
     /* -------------------------------------------------------------
        SCROLL REVEAL OBSERVER (.fade-up)
        ------------------------------------------------------------- */
+
+    /* -------------------------------------------------------------
+       VOLUME POPOVER & GRAND CELEBRATION EFFECTS
+       ------------------------------------------------------------- */
+    function toggleVolumePopover(e) {
+      if (e) e.stopPropagation();
+      const popover = document.getElementById('top-vol-popover');
+      if (popover) {
+        popover.classList.toggle('active');
+      }
+    }
+
+    function handleQuickVolume(val) {
+      const num = parseInt(val, 10);
+      setMelamVolume(num);
+      const display = document.getElementById('vol-pct-display');
+      if (display) display.innerText = `${num}%`;
+      const sliderModal = document.getElementById('melam-volume-slider');
+      if (sliderModal) sliderModal.value = num;
+      const volIcon = document.getElementById('vol-icon');
+      if (volIcon) {
+        volIcon.innerText = num === 0 ? '🔇' : (num < 50 ? '🔉' : '🔊');
+      }
+    }
+
+    document.addEventListener('click', (e) => {
+      const wrap = document.querySelector('.top-volume-wrap');
+      const popover = document.getElementById('top-vol-popover');
+      if (popover && wrap && !wrap.contains(e.target)) {
+        popover.classList.remove('active');
+      }
+    });
+
+    function triggerGrandCelebration() {
+      showerAkshadhaiBlessings();
+
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          const lantern = document.createElement('div');
+          lantern.className = 'wish-lantern';
+          lantern.style.left = `${10 + Math.random() * 80}vw`;
+          lantern.style.bottom = '-80px';
+          lantern.style.animationDelay = `${i * 0.45}s`;
+          document.body.appendChild(lantern);
+          setTimeout(() => lantern.remove(), 13000);
+        }, i * 350);
+      }
+
+      if (particleCanvas && particleCtx) {
+        for (let k = 0; k < 40; k++) {
+          const fx = (0.2 + Math.random() * 0.6) * window.innerWidth;
+          const fy = (0.2 + Math.random() * 0.4) * window.innerHeight;
+          spawnInteractiveSparkle(fx, fy);
+        }
+      }
+
+      const banner = document.getElementById('celebration-banner');
+      if (banner) {
+        banner.classList.add('active');
+        if (window.celebrationBannerTimer) clearTimeout(window.celebrationBannerTimer);
+        window.celebrationBannerTimer = setTimeout(() => {
+          banner.classList.remove('active');
+        }, 5500);
+      }
+    }
     function initScrollReveal() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -5677,7 +6328,7 @@
         });
       }, { threshold: 0.12 });
 
-      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+      document.querySelectorAll('.fade-up, .timeline-card-content, .couple-card, .venue-details-box, .album-thumb-wrap, .panchangam-cell, .countdown-unit-box').forEach(el => observer.observe(el));
     }
 
     /* -------------------------------------------------------------
@@ -6021,5 +6672,15 @@
       initApp();
     }
   </script>
+  <!-- Grand Celebration Banner Modal -->
+  <div id="celebration-banner" class="celebration-banner" role="dialog" aria-modal="true" aria-label="Grand Wedding Celebration">
+    <div class="banner-flourish">✦ ❦ ✦</div>
+    <div class="banner-title">வாழ்க வளமுடன் &bull; Just Married!</div>
+    <div class="banner-names">Ramya &amp; Aravindh</div>
+    <div class="banner-desc">May their sacred union be blessed with eternal happiness, prosperity, dharma and divine grace!</div>
+    <button class="btn-luxury" onclick="this.parentElement.classList.remove('active')" style="margin: 0 auto; display: block;">
+      ✦ நன்றி &bull; Close ✦
+    </button>
+  </div>
 </body>
 </html>
